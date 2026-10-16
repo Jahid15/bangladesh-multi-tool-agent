@@ -2,6 +2,12 @@
 
 An AI agent built with LangChain and Claude Haiku 5.5 that answers data questions from three Bangladesh datasets (institutions, hospitals, restaurants) using SQLite tools, and general knowledge questions using a web search tool.
 
+## Google Colab demo
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Jahid15/bangladesh-multi-tool-agent/blob/main/demo.ipynb)
+
+The notebook already contains the outputs of a full run. To run it yourself, add `ANTHROPIC_API_KEY` (and optionally `TAVILY_API_KEY`) in the Colab **Secrets** panel, then choose **Runtime > Run all**.
+
 ## Datasets
 
 | Dataset | Database | Table | Rows |
@@ -24,6 +30,7 @@ An AI agent built with LangChain and Claude Haiku 5.5 that answers data question
 build_databases.py   Downloads the CSVs and converts them to SQLite databases
 tools.py             InstitutionsDBTool, HospitalsDBTool, RestaurantsDBTool, WebSearchTool
 agent.py             Main agent (LangChain AgentExecutor) with CLI
+demo.ipynb           Google Colab demo notebook
 databases/           Generated SQLite databases
 ```
 

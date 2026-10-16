@@ -36,11 +36,14 @@ def build_agent(verbose=True):
     return AgentExecutor(agent=agent, tools=tools, verbose=verbose, max_iterations=8, handle_parsing_errors=True)
 
 
-def ask(executor, question):
-    output = executor.invoke({"input": question})["output"]
+def to_text(output):
     if isinstance(output, list):
-        output = "".join(block.get("text", "") for block in output if isinstance(block, dict))
+        return "".join(block.get("text", "") for block in output if isinstance(block, dict))
     return output
+
+
+def ask(executor, question):
+    return to_text(executor.invoke({"input": question})["output"])
 
 
 def main():
