@@ -1,6 +1,6 @@
 # Multi-Tool AI Agent for Bangladesh
 
-An AI agent built with LangChain that answers data questions from three Bangladesh datasets (institutions, hospitals, restaurants) using SQLite tools, and general knowledge questions using a web search tool.
+An AI agent built with LangChain and Claude Haiku 5.5 that answers data questions from three Bangladesh datasets (institutions, hospitals, restaurants) using SQLite tools, and general knowledge questions using a web search tool.
 
 ## Datasets
 
@@ -52,12 +52,12 @@ pip install -r requirements.txt
 Create a `.env` file (copy `.env.example`) and add your keys:
 
 ```
-OPENROUTER_API_KEY=your_openrouter_key
-OPENROUTER_MODEL=openai/gpt-4o-mini
+ANTHROPIC_API_KEY=your_anthropic_key
+ANTHROPIC_MODEL=claude-haiku-5-5
 TAVILY_API_KEY=optional_tavily_key
 ```
 
-Get an OpenRouter key at https://openrouter.ai/keys. Any OpenRouter model that supports tool calling works.
+Get an Anthropic key at https://console.anthropic.com. Get a Tavily key at https://tavily.com (optional).
 
 The databases are already included. To rebuild them from the original CSVs:
 

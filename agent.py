@@ -2,9 +2,9 @@ import os
 import sys
 
 from dotenv import load_dotenv
+from langchain_anthropic import ChatAnthropic
 from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 
 from tools import get_tools
 
@@ -24,12 +24,7 @@ Always answer the user in clear natural language based on the tool results. Do n
 
 
 def build_agent(verbose=True):
-    llm = ChatOpenAI(
-        model=os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini"),
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-        base_url="https://openrouter.ai/api/v1",
-        temperature=0,
-    )
+    llm = ChatAnthropic(model=os.getenv("ANTHROPIC_MODEL", "claude-haiku-5-5"))
     tools = get_tools()
     prompt = ChatPromptTemplate.from_messages([
         ("system", SYSTEM_PROMPT),
@@ -42,12 +37,15 @@ def build_agent(verbose=True):
 
 
 def ask(executor, question):
-    return executor.invoke({"input": question})["output"]
+    output = executor.invoke({"input": question})["output"]
+    if isinstance(output, list):
+        output = "".join(block.get("text", "") for block in output if isinstance(block, dict))
+    return output
 
 
 def main():
-    if not os.getenv("OPENROUTER_API_KEY"):
-        sys.exit("OPENROUTER_API_KEY is missing. Add it to the .env file.")
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        sys.exit("ANTHROPIC_API_KEY is missing. Add it to the .env file.")
     executor = build_agent()
     if len(sys.argv) > 1:
         print(ask(executor, " ".join(sys.argv[1:])))
